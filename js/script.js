@@ -51,6 +51,7 @@ window.addEventListener('DOMContentLoaded', function() {
 btnReady.addEventListener('click', function() {
 	let mCards = document.getElementsByClassName('main-cards'),
 	mCardsItem = document.getElementsByClassName('main-cards-item')[0],
+	mCardsItem2 = document.getElementsByClassName('main-cards-item')[1],
 	newPerson = {};
 	newPerson.name = document.querySelector('#name').value;
 	newPerson.age = document.querySelector('#age').value;
@@ -59,6 +60,7 @@ btnReady.addEventListener('click', function() {
 	newPerson.bio = document.querySelector('#bio').value;
 
 	mCardsItem.classList.remove('main-cards-item-active');
+	mCardsItem2.classList.remove('main-cards-item-active');
 	newCardsItem = mCardsItem.cloneNode(true);
 
 		//заполняю карточку
@@ -147,11 +149,26 @@ btnVoting.addEventListener('click', function() {
 //кнопка вмешаться в выборы
 btnСrime.addEventListener('click', function() {
 	let progressBar = mainBlock.querySelectorAll('.progress-bar'),
-	progressBarNumber = mainBlock.querySelectorAll('.result-count');
-	function getRandomInt(min, max){
-		let result = Math.floor(Math.random() * (max - min) + min);
-		result2 = Math.floor(Math.random()* (max - result) + min);
-		result3 = max - result - result2 + 25;
+			progressBarNumber = mainBlock.querySelectorAll('.result-count'),
+			result = parseInt(progressBar[0].style.height),
+			result2 = parseInt(progressBar[1].style.height),
+			result3 = parseInt(progressBar[2].style.height);
+
+			if (result > 16 && result <= 100 && result2 > 16 && result2 <= 100) {
+				result = parseInt(progressBar[0].style.height) - 25/2;
+				result2 = parseInt(progressBar[1].style.height) - 25/2;
+				result3 = parseInt(progressBar[2].style.height) + 25;
+			} else if (result <= 26 || result2 >= 26) {
+				result2 = parseInt(progressBar[1].style.height) - 25;
+				result3 = parseInt(progressBar[2].style.height) + 25;
+			}	else if (result >= 26 || result2 <= 26) {
+				result = parseInt(progressBar[0].style.height) - 25;
+				result3 = parseInt(progressBar[2].style.height) + 25;
+			}	else if (result < 10 || result2 < 10) {
+				result = parseInt(progressBar[0].style.height),
+				result2 = parseInt(progressBar[1].style.height),
+				result3 = parseInt(progressBar[2].style.height);
+			}
 		if (result > result2 && result > result3) {
 			mCardsItem[0].classList.add("main-cards-item-active");
 			mCardsItem[1].classList.remove("main-cards-item-active");
@@ -171,7 +188,5 @@ btnСrime.addEventListener('click', function() {
 		progressBarNumber[0].textContent = progressBar[0].style.height;
 		progressBarNumber[1].textContent = progressBar[1].style.height;
 		progressBarNumber[2].textContent = progressBar[2].style.height;
-	};
-	getRandomInt(0, 75);
 });
 });
