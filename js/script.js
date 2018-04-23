@@ -59,6 +59,37 @@ btnReady.addEventListener('click', function() {
 	newPerson.views = document.querySelector('#select').value;
 	newPerson.bio = document.querySelector('#bio').value;
 
+	valid = true;
+
+  //проверка на валидность
+  if(newPerson.name !== '' && isNaN(+newPerson.name)){
+    document.querySelector("#name").style.border = "none";
+  } else {
+    document.querySelector("#name").style.border = "1px solid red";
+    document.querySelector("#name").style.background = "#ffc6c6";
+    document.querySelector("#name").style.color = "#1c2028";
+    valid = false;
+  }
+  if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
+    document.querySelector("#age").style.border = "none";
+  } else {
+    document.querySelector("#age").style.border = "1px solid red";
+    document.querySelector("#age").style.background = "#ffc6c6";
+    document.querySelector("#age").style.color = "#1c2028";
+    valid = false;
+  }
+  if(newPerson.bio !== '' && isNaN(+newPerson.bio)){
+    document.querySelector("#bio").style.border = "none";
+  } else {
+    document.querySelector("#bio").style.border = "1px solid red";
+    document.querySelector("#bio").style.background = "#ffc6c6";
+    document.querySelector("#bio").style.color = "#1c2028";
+    valid = false;
+  }
+  if(!valid) {
+    return;
+  }
+
 	mCardsItem.classList.remove('main-cards-item-active');
 	mCardsItem2.classList.remove('main-cards-item-active');
 	newCardsItem = mCardsItem.cloneNode(true);
