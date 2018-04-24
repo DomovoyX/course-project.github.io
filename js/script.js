@@ -25,93 +25,93 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	//выбор пола, настройка слайдера
 	let maleRadio = document.querySelector("#male"),
-			femaleRadio = document.querySelector("#female"),
-			personEasy = document.querySelector(".person-easy"),
-			sex = "male";
-						
-			maleRadio.addEventListener('change', function() {
-				personEasy.style.background = 'url(img/construct-5.png) center no-repeat';
-				personEasy.style.backgroundSize = '70%';
-						let preview          = document.querySelector('.preview'),
-								prev             = document.querySelector('.prev'),
-								next             = document.querySelector('.next'),
-								backgroundSlides = [
-										"url(img/construct-5.png)",
-										"url(img/construct-6.png)",
-										"url(img/construct-7.png)",
-										"url(img/construct-8.png)",
-										],
-										slideIndex = 1;
+	femaleRadio = document.querySelector("#female"),
+	personEasy = document.querySelector(".person-easy"),
+	sex = "male";
+	
+	maleRadio.addEventListener('change', function() {
+		personEasy.style.background = 'url(img/construct-5.png) center no-repeat';
+		personEasy.style.backgroundSize = '70%';
+		let preview          = document.querySelector('.preview'),
+		prev             = document.querySelector('.prev'),
+		next             = document.querySelector('.next'),
+		backgroundSlides = [
+		"url(img/construct-5.png)",
+		"url(img/construct-6.png)",
+		"url(img/construct-7.png)",
+		"url(img/construct-8.png)",
+		],
+		slideIndex = 1;
 
-						showSlides(slideIndex);
+		showSlides(slideIndex);
 
-						function showSlides(n) {
-						if (n > backgroundSlides.length) {
-							slideIndex = 1;
-						};
-						if (n < 1) {
-							slideIndex = backgroundSlides.length;
-						};
+		function showSlides(n) {
+			if (n > backgroundSlides.length) {
+				slideIndex = 1;
+			};
+			if (n < 1) {
+				slideIndex = backgroundSlides.length;
+			};
 
-						preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
-						personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
-						
-					};
-
-					function plusSlides (n) {
-						showSlides(slideIndex += n)
-					};
-
-					prev.onclick = function() {
-						plusSlides(-1);
-					};
-					next.onclick = function() {
-						plusSlides(1);
-					};
-
-			});
+			preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
+			personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
 			
-			femaleRadio.addEventListener('change', function() {
-				personEasy.style.background = 'url(img/construct-1.png) center no-repeat';
-				personEasy.style.backgroundSize = '70%';
-						let preview          = document.querySelector('.preview'),
-								prev             = document.querySelector('.prev'),
-								next             = document.querySelector('.next'),
-								backgroundSlides = [
-										"url(img/construct-1.png)",
-										"url(img/construct-2.png)",
-										"url(img/construct-3.png)",
-										"url(img/construct-4.png)",
-										],
-										slideIndex = 1;
+		};
 
-						showSlides(slideIndex);
+		function plusSlides (n) {
+			showSlides(slideIndex += n)
+		};
 
-						function showSlides(n) {
-						if (n > backgroundSlides.length) {
-							slideIndex = 1;
-						};
-						if (n < 1) {
-							slideIndex = backgroundSlides.length;
-						};
+		prev.onclick = function() {
+			plusSlides(-1);
+		};
+		next.onclick = function() {
+			plusSlides(1);
+		};
 
-						preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
-						personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
-						
-					};
+	});
+	
+	femaleRadio.addEventListener('change', function() {
+		personEasy.style.background = 'url(img/construct-1.png) center no-repeat';
+		personEasy.style.backgroundSize = '70%';
+		let preview          = document.querySelector('.preview'),
+		prev             = document.querySelector('.prev'),
+		next             = document.querySelector('.next'),
+		backgroundSlides = [
+		"url(img/construct-1.png)",
+		"url(img/construct-2.png)",
+		"url(img/construct-3.png)",
+		"url(img/construct-4.png)",
+		],
+		slideIndex = 1;
 
-					function plusSlides (n) {
-						showSlides(slideIndex += n)
-					};
+		showSlides(slideIndex);
 
-					prev.onclick = function() {
-						plusSlides(-1);
-					};
-					next.onclick = function() {
-						plusSlides(1);
-					};
+		function showSlides(n) {
+			if (n > backgroundSlides.length) {
+				slideIndex = 1;
+			};
+			if (n < 1) {
+				slideIndex = backgroundSlides.length;
+			};
 
-			});
+			preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
+			personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
+			
+		};
+
+		function plusSlides (n) {
+			showSlides(slideIndex += n)
+		};
+
+		prev.onclick = function() {
+			plusSlides(-1);
+		};
+		next.onclick = function() {
+			plusSlides(1);
+		};
+
+	});
 
 //новая карточка кандидата, заполнение данных о кандидате, несколько простых проверок на ввод данных
 btnReady.addEventListener('click', function() {
@@ -125,81 +125,81 @@ btnReady.addEventListener('click', function() {
 	valid = true;
 
 //проверка на валидность
-		if(newPerson.name !== '' && isNaN(+newPerson.name)){
-			document.querySelector("#name").style.border = "none";
-			document.querySelector("#name").style.background = "#1c2028";
-			document.querySelector("#name").style.color = "#fff";
-		} else {
-			alert("Поле для воода имени пустое либо не корректный ввод!");
-			document.querySelector("#name").style.border = "1px solid red";
-			document.querySelector("#name").style.background = "#ffc6c6";
-			document.querySelector("#name").style.color = "#1c2028";
-			valid = false;
-		}
-		if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
-			document.querySelector("#age").style.border = "none";
-			document.querySelector("#name").style.background = "#1c2028";
-			document.querySelector("#name").style.color = "#fff";
-		} else {
-			alert("Введите возраст кандидата, он должен быть от 30 до 65 лет!");
-			document.querySelector("#age").style.border = "1px solid red";
-			document.querySelector("#age").style.background = "#ffc6c6";
-			document.querySelector("#age").style.color = "#1c2028";
-			valid = false;
-		}
-		if(document.getElementById('male').checked || document.getElementById('female').checked) {
-			newPerson.sex = document.querySelector('[name=sex]:checked').value;
-		} else {
-			alert("Выберете пол кандидата!");
-		}
-		
-		if(newPerson.bio !== '' && isNaN(+newPerson.bio)){
-			document.querySelector("#bio").style.border = "none";
-			document.querySelector("#name").style.background = "#1c2028";
-			document.querySelector("#name").style.color = "#fff";
-		} else {
-			alert("Заполните биогранфию кандидата!");
-			document.querySelector("#bio").style.border = "1px solid red";
-			document.querySelector("#bio").style.background = "#ffc6c6";
-			document.querySelector("#bio").style.color = "#1c2028";
-			valid = false;
-		}
-		if(!valid) {
-			return;
-		}
+if(newPerson.name !== '' && isNaN(+newPerson.name)){
+	document.querySelector("#name").style.border = "none";
+	document.querySelector("#name").style.background = "#1c2028";
+	document.querySelector("#name").style.color = "#fff";
+} else {
+	alert("Поле для воода имени пустое либо не корректный ввод!");
+	document.querySelector("#name").style.border = "1px solid red";
+	document.querySelector("#name").style.background = "#ffc6c6";
+	document.querySelector("#name").style.color = "#1c2028";
+	valid = false;
+}
+if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
+	document.querySelector("#age").style.border = "none";
+	document.querySelector("#name").style.background = "#1c2028";
+	document.querySelector("#name").style.color = "#fff";
+} else {
+	alert("Введите возраст кандидата, он должен быть от 30 до 65 лет!");
+	document.querySelector("#age").style.border = "1px solid red";
+	document.querySelector("#age").style.background = "#ffc6c6";
+	document.querySelector("#age").style.color = "#1c2028";
+	valid = false;
+}
+if(document.getElementById('male').checked || document.getElementById('female').checked) {
+	newPerson.sex = document.querySelector('[name=sex]:checked').value;
+} else {
+	alert("Выберете пол кандидата!");
+}
 
-		mCardsItem.classList.remove('main-cards-item-active');
-		newCardsItem = mCardsItem.cloneNode(true);
+if(newPerson.bio !== '' && isNaN(+newPerson.bio)){
+	document.querySelector("#bio").style.border = "none";
+	document.querySelector("#name").style.background = "#1c2028";
+	document.querySelector("#name").style.color = "#fff";
+} else {
+	alert("Заполните биогранфию кандидата!");
+	document.querySelector("#bio").style.border = "1px solid red";
+	document.querySelector("#bio").style.background = "#ffc6c6";
+	document.querySelector("#bio").style.color = "#1c2028";
+	valid = false;
+}
+if(!valid) {
+	return;
+}
+
+mCardsItem.classList.remove('main-cards-item-active');
+newCardsItem = mCardsItem.cloneNode(true);
 
 //заполняю карточку
-		newCardsItem.querySelector('.name').textContent = newPerson.name;
-		newCardsItem.querySelector('.age').textContent = newPerson.age + " лет";
-		newCardsItem.querySelector('.sex').textContent = newPerson.sex;
-		newCardsItem.querySelector('.views').textContent = newPerson.views;
-		newCardsItem.querySelector('.bio').textContent = newPerson.bio;
-		newCardsItem.querySelector('.photo').classList.remove('photo-1');
-		newCardsItem.querySelector(".photo").style.backgroundImage = personEasy.style.backgroundImage;
-		newCardsItem.querySelector(".photo").style.backgroundSize = "contain";
-		newCardsItem.querySelector(".photo").style.backgroundRepeat = "no-repeat";
+newCardsItem.querySelector('.name').textContent = newPerson.name;
+newCardsItem.querySelector('.age').textContent = newPerson.age + " лет";
+newCardsItem.querySelector('.sex').textContent = newPerson.sex;
+newCardsItem.querySelector('.views').textContent = newPerson.views;
+newCardsItem.querySelector('.bio').textContent = newPerson.bio;
+newCardsItem.querySelector('.photo').classList.remove('photo-1');
+newCardsItem.querySelector(".photo").style.backgroundImage = personEasy.style.backgroundImage;
+newCardsItem.querySelector(".photo").style.backgroundSize = "contain";
+newCardsItem.querySelector(".photo").style.backgroundRepeat = "no-repeat";
 
 //переносим нашу карточку в конец списка
-		mCards[0].appendChild(newCardsItem);
+mCards[0].appendChild(newCardsItem);
 
 //обнуляю голоса
-	let progressBar = mainBlock.querySelectorAll('.progress-bar'),
-			progressBarNumber = mainBlock.querySelectorAll('.result-count');
-		
-		for (var i = 0; i < progressBar.length; i++) {
-			progressBar[i].style.height = '0%';
-			progressBarNumber[i].textContent = '0%';
-		};
+let progressBar = mainBlock.querySelectorAll('.progress-bar'),
+progressBarNumber = mainBlock.querySelectorAll('.result-count');
 
-		mainBlock.style.display = 'block';
-		customBlock.style.display = "none";
-		for (let i = 0; i < customBlock.children.length; i++) {
-			customBlock.children[i].style.display = "none";
-		}
-	});
+for (var i = 0; i < progressBar.length; i++) {
+	progressBar[i].style.height = '0%';
+	progressBarNumber[i].textContent = '0%';
+};
+
+mainBlock.style.display = 'block';
+customBlock.style.display = "none";
+for (let i = 0; i < customBlock.children.length; i++) {
+	customBlock.children[i].style.display = "none";
+}
+});
 
 
 //кнопка сбросить результаты
@@ -245,7 +245,7 @@ btnVoting.addEventListener("click", function() {
 	}
 
 	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
-			progressBarNumber = mainBlock.querySelectorAll(".result-count");
+	progressBarNumber = mainBlock.querySelectorAll(".result-count");
 	for (var i = 0; i < progressBar.length; i++) {
 		progressBar[i].style.height = result[i] + "%";
 		progressBarNumber[i].textContent = result[i] + "%";
@@ -255,15 +255,15 @@ btnVoting.addEventListener("click", function() {
 // Получение рандомного числа
 
 function getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min + 1) ) + min;
+	return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
 // Вмешаться в выборы
 
 btnСrime.addEventListener("click", function() {
 	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
-			progressBarNumber = mainBlock.querySelectorAll(".result-count"),
-			votesCandidate = counter(result);
+	progressBarNumber = mainBlock.querySelectorAll(".result-count"),
+	votesCandidate = counter(result);
 
 	if(result[votesCandidate] >= 25 && result[2] <= 75){
 		result[votesCandidate] -= 25;
