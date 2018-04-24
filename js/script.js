@@ -1,21 +1,21 @@
-window.addEventListener('DOMContentLoaded', function() {
-	let btnCreate = document.getElementById('popup-btn'),
-	btnReady = document.getElementById('ready'),
-	btnReset = document.getElementById('reset'),
-	btnVoting = document.getElementById('voting'),
-	btnСrime = document.getElementById('crime'),
-	windowOverlay = document.getElementsByClassName('overlay')[0],
-	mainBlock = document.querySelector('.main'),
-	customBlock = document.getElementsByClassName('custom')[0],
-	mCardsItem = document.getElementsByClassName('main-cards-item')[0],
-	info = document.getElementsByClassName('custom-info')[0],
-	char = document.getElementsByClassName('custom-char')[0],
-	style = document.getElementsByClassName('custom-style')[0];
+window.addEventListener("DOMContentLoaded", function() {
+	let btnCreate = document.getElementById("popup-btn"),
+	btnReady = document.getElementById("ready"),
+	btnReset = document.getElementById("reset"),
+	btnVoting = document.getElementById("voting"),
+	btnСrime = document.getElementById("crime"),
+	windowOverlay = document.getElementsByClassName("overlay")[0],
+	mainBlock = document.querySelector(".main"),
+	customBlock = document.getElementsByClassName("custom")[0],
+	mCardsItem = document.getElementsByClassName("main-cards-item")[0],
+	info = document.getElementsByClassName("custom-info")[0],
+	char = document.getElementsByClassName("custom-char")[0],
+	style = document.getElementsByClassName("custom-style")[0];
 
 	// переходим к созданию карточки кандидата
-	btnCreate.addEventListener('click', function() {
-		windowOverlay.style.display = 'none';
-		mainBlock.style.display = 'none';
+	btnCreate.addEventListener("click", function() {
+		windowOverlay.style.display = "none";
+		mainBlock.style.display = "none";
 		customBlock.style.display = "flex";
 		
 		for (var i = 0; i < customBlock.children.length; i++) {
@@ -26,15 +26,59 @@ window.addEventListener('DOMContentLoaded', function() {
 	//выбор пола, настройка слайдера
 	let maleRadio = document.querySelector("#male"),
 	femaleRadio = document.querySelector("#female"),
-	personEasy = document.querySelector(".person-easy"),
-	sex = "male";
+	personEasy = document.querySelector(".person-easy");
+
+	function slider() {
+		sex = "male";
+		if (document.getElementById("male").checked) {
+			personEasy.style.background = "url(img/construct-5.png) center no-repeat";
+			personEasy.style.backgroundSize = "70%";
+			let preview = document.querySelector(".preview"),
+			prev = document.querySelector(".prev"),
+			next = document.querySelector(".next"),
+			backgroundSlides = [
+			"url(img/construct-5.png)",
+			"url(img/construct-6.png)",
+			"url(img/construct-7.png)",
+			"url(img/construct-8.png)",
+			],
+			slideIndex = 1;
+
+			showSlides(slideIndex);
+
+			function showSlides(n) {
+				if (n > backgroundSlides.length) {
+					slideIndex = 1;
+				};
+				if (n < 1) {
+					slideIndex = backgroundSlides.length;
+				};
+
+				preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
+				personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
+
+			};
+
+			function plusSlides (n) {
+				showSlides(slideIndex += n)
+			};
+
+			prev.onclick = function() {
+				plusSlides(-1);
+			};
+			next.onclick = function() {
+				plusSlides(1);
+			};
+		};
+	};
+	slider();
 	
-	maleRadio.addEventListener('change', function() {
-		personEasy.style.background = 'url(img/construct-5.png) center no-repeat';
-		personEasy.style.backgroundSize = '70%';
-		let preview          = document.querySelector('.preview'),
-		prev             = document.querySelector('.prev'),
-		next             = document.querySelector('.next'),
+	maleRadio.addEventListener("change", function() {
+		personEasy.style.background = "url(img/construct-5.png) center no-repeat";
+		personEasy.style.backgroundSize = "70%";
+		let preview = document.querySelector(".preview"),
+		prev = document.querySelector(".prev"),
+		next = document.querySelector(".next"),
 		backgroundSlides = [
 		"url(img/construct-5.png)",
 		"url(img/construct-6.png)",
@@ -55,7 +99,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 			preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
 			personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
-			
+
 		};
 
 		function plusSlides (n) {
@@ -68,15 +112,14 @@ window.addEventListener('DOMContentLoaded', function() {
 		next.onclick = function() {
 			plusSlides(1);
 		};
-
 	});
-	
-	femaleRadio.addEventListener('change', function() {
-		personEasy.style.background = 'url(img/construct-1.png) center no-repeat';
-		personEasy.style.backgroundSize = '70%';
-		let preview          = document.querySelector('.preview'),
-		prev             = document.querySelector('.prev'),
-		next             = document.querySelector('.next'),
+
+	femaleRadio.addEventListener("change", function() {
+		personEasy.style.background = "url(img/construct-1.png) center no-repeat";
+		personEasy.style.backgroundSize = "70%";
+		let preview = document.querySelector(".preview"),
+		prev = document.querySelector(".prev"),
+		next = document.querySelector(".next"),
 		backgroundSlides = [
 		"url(img/construct-1.png)",
 		"url(img/construct-2.png)",
@@ -97,7 +140,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 			preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
 			personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
-			
+
 		};
 
 		function plusSlides (n) {
@@ -114,18 +157,19 @@ window.addEventListener('DOMContentLoaded', function() {
 	});
 
 //новая карточка кандидата, заполнение данных о кандидате, несколько простых проверок на ввод данных
-btnReady.addEventListener('click', function() {
-	let mCards = document.getElementsByClassName('main-cards'),
+btnReady.addEventListener("click", function() {
+	let mCards = document.getElementsByClassName("main-cards"),
 	newPerson = {};
-	newPerson.name = document.querySelector('#name').value;
-	newPerson.age = document.querySelector('#age').value;
-	newPerson.views = document.querySelector('#select').value;
-	newPerson.bio = document.querySelector('#bio').value;
+	newPerson.name = document.querySelector("#name").value;
+	newPerson.age = document.querySelector("#age").value;
+	newPerson.sex = document.querySelector("[name=sex]:checked").value;
+	newPerson.views = document.querySelector("#select").value;
+	newPerson.bio = document.querySelector("#bio").value;
 
 	valid = true;
 
 //проверка на валидность
-if(newPerson.name !== '' && isNaN(+newPerson.name)){
+if(newPerson.name !== "" && isNaN(+newPerson.name)){
 	document.querySelector("#name").style.border = "none";
 	document.querySelector("#name").style.background = "#1c2028";
 	document.querySelector("#name").style.color = "#fff";
@@ -136,7 +180,7 @@ if(newPerson.name !== '' && isNaN(+newPerson.name)){
 	document.querySelector("#name").style.color = "#1c2028";
 	valid = false;
 }
-if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
+if(newPerson.age !== "" && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
 	document.querySelector("#age").style.border = "none";
 	document.querySelector("#name").style.background = "#1c2028";
 	document.querySelector("#name").style.color = "#fff";
@@ -147,13 +191,7 @@ if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newP
 	document.querySelector("#age").style.color = "#1c2028";
 	valid = false;
 }
-if(document.getElementById('male').checked || document.getElementById('female').checked) {
-	newPerson.sex = document.querySelector('[name=sex]:checked').value;
-} else {
-	alert("Выберете пол кандидата!");
-}
-
-if(newPerson.bio !== '' && isNaN(+newPerson.bio)){
+if(newPerson.bio !== "" && isNaN(+newPerson.bio)){
 	document.querySelector("#bio").style.border = "none";
 	document.querySelector("#name").style.background = "#1c2028";
 	document.querySelector("#name").style.color = "#fff";
@@ -168,16 +206,16 @@ if(!valid) {
 	return;
 }
 
-mCardsItem.classList.remove('main-cards-item-active');
+mCardsItem.classList.remove("main-cards-item-active");
 newCardsItem = mCardsItem.cloneNode(true);
 
 //заполняю карточку
-newCardsItem.querySelector('.name').textContent = newPerson.name;
-newCardsItem.querySelector('.age').textContent = newPerson.age + " лет";
-newCardsItem.querySelector('.sex').textContent = newPerson.sex;
-newCardsItem.querySelector('.views').textContent = newPerson.views;
-newCardsItem.querySelector('.bio').textContent = newPerson.bio;
-newCardsItem.querySelector('.photo').classList.remove('photo-1');
+newCardsItem.querySelector(".name").textContent = newPerson.name;
+newCardsItem.querySelector(".age").textContent = newPerson.age + " лет";
+newCardsItem.querySelector(".sex").textContent = newPerson.sex;
+newCardsItem.querySelector(".views").textContent = newPerson.views;
+newCardsItem.querySelector(".bio").textContent = newPerson.bio;
+newCardsItem.querySelector(".photo").classList.remove("photo-1");
 newCardsItem.querySelector(".photo").style.backgroundImage = personEasy.style.backgroundImage;
 newCardsItem.querySelector(".photo").style.backgroundSize = "contain";
 newCardsItem.querySelector(".photo").style.backgroundRepeat = "no-repeat";
@@ -186,15 +224,15 @@ newCardsItem.querySelector(".photo").style.backgroundRepeat = "no-repeat";
 mCards[0].appendChild(newCardsItem);
 
 //обнуляю голоса
-let progressBar = mainBlock.querySelectorAll('.progress-bar'),
-progressBarNumber = mainBlock.querySelectorAll('.result-count');
+let progressBar = mainBlock.querySelectorAll(".progress-bar"),
+progressBarNumber = mainBlock.querySelectorAll(".result-count");
 
 for (var i = 0; i < progressBar.length; i++) {
-	progressBar[i].style.height = '0%';
-	progressBarNumber[i].textContent = '0%';
+	progressBar[i].style.height = "0%";
+	progressBarNumber[i].textContent = "0%";
 };
 
-mainBlock.style.display = 'block';
+mainBlock.style.display = "block";
 customBlock.style.display = "none";
 for (let i = 0; i < customBlock.children.length; i++) {
 	customBlock.children[i].style.display = "none";
@@ -203,13 +241,13 @@ for (let i = 0; i < customBlock.children.length; i++) {
 
 
 //кнопка сбросить результаты
-btnReset.addEventListener('click', function() {
-	let progressBar = mainBlock.querySelectorAll('.progress-bar'),
-	mainCardsItem = mainBlock.querySelectorAll('.main-cards-item'),
-	progressBarNumber = mainBlock.querySelectorAll('.result-count');
+btnReset.addEventListener("click", function() {
+	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
+	mainCardsItem = mainBlock.querySelectorAll(".main-cards-item"),
+	progressBarNumber = mainBlock.querySelectorAll(".result-count");
 	for (let i = 0; i < progressBar.length; i++) {
-		progressBar[i].style.height = '0%';
-		progressBarNumber[i].textContent = '0%';
+		progressBar[i].style.height = "0%";
+		progressBarNumber[i].textContent = "0%";
 	};
 
 	for (let i = 0; i < mainCardsItem.length; i++) {
@@ -218,11 +256,28 @@ btnReset.addEventListener('click', function() {
 		}
 	};
 	
-	mainBlock.style.display = 'none';
+	document.querySelector("#name").value = "";
+	document.querySelector("#name").style.border = "none";
+	document.querySelector("#name").style.background = "#1c2028";
+	document.querySelector("#name").style.color = "#fff";
+	document.querySelector("#age").value = "";
+	document.querySelector("#age").style.border = "none";
+	document.querySelector("#age").style.background = "#1c2028";
+	document.querySelector("#age").style.color = "#fff";
+	document.querySelector("#male").checked = "checked";
+	document.querySelector("#bio").value = "";
+	document.querySelector("#bio").style.border = "none";
+	document.querySelector("#bio").style.background = "#1c2028";
+	document.querySelector("#bio").style.color = "#fff";
+
+
+	mainBlock.style.display = "none";
 	customBlock.style.display = "flex";
 	for (let i = 0; i < customBlock.children.length; i++) {
 		customBlock.children[i].style.display = "block";
 	}
+	
+	slider();
 });
 
 // Провести честное голосование
