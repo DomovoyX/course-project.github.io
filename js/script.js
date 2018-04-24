@@ -7,6 +7,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	windowOverlay = document.getElementsByClassName('overlay')[0],
 	mainBlock = document.querySelector('.main'),
 	customBlock = document.getElementsByClassName('custom')[0],
+	mCardsItem = document.getElementsByClassName('main-cards-item')[0],
 	info = document.getElementsByClassName('custom-info')[0],
 	char = document.getElementsByClassName('custom-char')[0],
 	style = document.getElementsByClassName('custom-style')[0];
@@ -23,78 +24,152 @@ window.addEventListener('DOMContentLoaded', function() {
 	});
 
 	//выбор пола, настройка слайдера
-	let sexMaleRadio = document.querySelector("#male"),
-			sexFemaleRadio = document.querySelector("#female"),
-			personEasy = document.querySelector(".person-easy"),	// кандидат
-			personSlide = document.querySelector(".preview"),			// выбор кандидата
-			btnPrev = document.querySelector(".prev"),
-			btnNext = document.querySelector(".next"),
-			counter = 0,
+	let maleRadio = document.querySelector("#male"),
+			femaleRadio = document.querySelector("#female"),
+			personEasy = document.querySelector(".person-easy"),
 			sex = "male";
-			
-			personEasy.style.backgroundImage = "url(img/construct-5.png)";
-			personSlide.style.backgroundImage = "url(img/construct-5.png)";
-			
-			sexMaleRadio.addEventListener("change", function() {
-				sex = "male";
-				personEasy.style.backgroundImage = "url(img/construct-5.png)";
-				personSlide.style.backgroundImage = "url(img/construct-5.png)";
+						
+			maleRadio.addEventListener('change', function() {
+				personEasy.style.background = 'url(img/construct-5.png) center no-repeat';
+				personEasy.style.backgroundSize = '70%';
+						let preview          = document.querySelector('.preview'),
+								prev             = document.querySelector('.prev'),
+								next             = document.querySelector('.next'),
+								backgroundSlides = [
+										"url(img/construct-5.png)",
+										"url(img/construct-6.png)",
+										"url(img/construct-7.png)",
+										"url(img/construct-8.png)",
+										],
+										slideIndex = 1;
+
+						showSlides(slideIndex);
+
+						function showSlides(n) {
+						if (n > backgroundSlides.length) {
+							slideIndex = 1;
+						};
+						if (n < 1) {
+							slideIndex = backgroundSlides.length;
+						};
+
+						preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
+						personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
+						
+					};
+
+					function plusSlides (n) {
+						showSlides(slideIndex += n)
+					};
+
+					prev.onclick = function() {
+						plusSlides(-1);
+					};
+					next.onclick = function() {
+						plusSlides(1);
+					};
+
 			});
 			
-			sexFemaleRadio.addEventListener("change", function() {
-				sex = "female";
-				personEasy.style.backgroundImage = "url(img/construct-1.png)";
-				personSlide.style.backgroundImage = "url(img/construct-1.png)";
+			femaleRadio.addEventListener('change', function() {
+				personEasy.style.background = 'url(img/construct-1.png) center no-repeat';
+				personEasy.style.backgroundSize = '70%';
+						let preview          = document.querySelector('.preview'),
+								prev             = document.querySelector('.prev'),
+								next             = document.querySelector('.next'),
+								backgroundSlides = [
+										"url(img/construct-1.png)",
+										"url(img/construct-2.png)",
+										"url(img/construct-3.png)",
+										"url(img/construct-4.png)",
+										],
+										slideIndex = 1;
+
+						showSlides(slideIndex);
+
+						function showSlides(n) {
+						if (n > backgroundSlides.length) {
+							slideIndex = 1;
+						};
+						if (n < 1) {
+							slideIndex = backgroundSlides.length;
+						};
+
+						preview.style.backgroundImage    = backgroundSlides[slideIndex - 1],
+						personEasy.style.backgroundImage = backgroundSlides[slideIndex - 1]
+						
+					};
+
+					function plusSlides (n) {
+						showSlides(slideIndex += n)
+					};
+
+					prev.onclick = function() {
+						plusSlides(-1);
+					};
+					next.onclick = function() {
+						plusSlides(1);
+					};
+
 			});
+
+		
 
 //новая карточка кандидата
 btnReady.addEventListener('click', function() {
 	let mCards = document.getElementsByClassName('main-cards'),
-	mCardsItem = document.getElementsByClassName('main-cards-item')[0],
-	mCardsItem2 = document.getElementsByClassName('main-cards-item')[1],
 	newPerson = {};
 	newPerson.name = document.querySelector('#name').value;
 	newPerson.age = document.querySelector('#age').value;
-	newPerson.sex = document.querySelector('[name=sex]:checked').value;
 	newPerson.views = document.querySelector('#select').value;
 	newPerson.bio = document.querySelector('#bio').value;
 
 	valid = true;
 
-  //проверка на валидность
-  if(newPerson.name !== '' && isNaN(+newPerson.name)){
-    document.querySelector("#name").style.border = "none";
-  } else {
-    document.querySelector("#name").style.border = "1px solid red";
-    document.querySelector("#name").style.background = "#ffc6c6";
-    document.querySelector("#name").style.color = "#1c2028";
-    valid = false;
-  }
-  if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
-    document.querySelector("#age").style.border = "none";
-  } else {
-    document.querySelector("#age").style.border = "1px solid red";
-    document.querySelector("#age").style.background = "#ffc6c6";
-    document.querySelector("#age").style.color = "#1c2028";
-    valid = false;
-  }
-  if(newPerson.bio !== '' && isNaN(+newPerson.bio)){
-    document.querySelector("#bio").style.border = "none";
-  } else {
-    document.querySelector("#bio").style.border = "1px solid red";
-    document.querySelector("#bio").style.background = "#ffc6c6";
-    document.querySelector("#bio").style.color = "#1c2028";
-    valid = false;
-  }
-  if(!valid) {
-    return;
-  }
+//проверка на валидность
+		if(newPerson.name !== '' && isNaN(+newPerson.name)){
+			document.querySelector("#name").style.border = "none";
+			document.querySelector("#name").style.background = "#1c2028";
+			document.querySelector("#name").style.color = "#fff";
+		} else {
+			document.querySelector("#name").style.border = "1px solid red";
+			document.querySelector("#name").style.background = "#ffc6c6";
+			document.querySelector("#name").style.color = "#1c2028";
+			valid = false;
+		}
+		if(document.getElementById('male').checked || document.getElementById('female').checked) {
+  		newPerson.sex = document.querySelector('[name=sex]:checked').value;
+		} else {
+  		alert("Выберете пол кандидата!");
+		}
+		if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
+			document.querySelector("#age").style.border = "none";
+			document.querySelector("#name").style.background = "#1c2028";
+			document.querySelector("#name").style.color = "#fff";
+		} else {
+			document.querySelector("#age").style.border = "1px solid red";
+			document.querySelector("#age").style.background = "#ffc6c6";
+			document.querySelector("#age").style.color = "#1c2028";
+			valid = false;
+		}
+		if(newPerson.bio !== '' && isNaN(+newPerson.bio)){
+			document.querySelector("#bio").style.border = "none";
+			document.querySelector("#name").style.background = "#1c2028";
+			document.querySelector("#name").style.color = "#fff";
+		} else {
+			document.querySelector("#bio").style.border = "1px solid red";
+			document.querySelector("#bio").style.background = "#ffc6c6";
+			document.querySelector("#bio").style.color = "#1c2028";
+			valid = false;
+		}
+		if(!valid) {
+			return;
+		}
 
-	mCardsItem.classList.remove('main-cards-item-active');
-	mCardsItem2.classList.remove('main-cards-item-active');
-	newCardsItem = mCardsItem.cloneNode(true);
+		mCardsItem.classList.remove('main-cards-item-active');
+		newCardsItem = mCardsItem.cloneNode(true);
 
-		//заполняю карточку
+//заполняю карточку
 		newCardsItem.querySelector('.name').textContent = newPerson.name;
 		newCardsItem.querySelector('.age').textContent = newPerson.age + " лет";
 		newCardsItem.querySelector('.sex').textContent = newPerson.sex;
@@ -105,9 +180,9 @@ btnReady.addEventListener('click', function() {
 		
 		mCards[0].appendChild(newCardsItem);
 
-		//обнуляю голоса
-		let progressBar = mainBlock.querySelectorAll('.progress-bar'),
-		progressBarNumber = mainBlock.querySelectorAll('.result-count');
+//обнуляю голоса
+	let progressBar = mainBlock.querySelectorAll('.progress-bar'),
+			progressBarNumber = mainBlock.querySelectorAll('.result-count');
 		
 		for (var i = 0; i < progressBar.length; i++) {
 			progressBar[i].style.height = '0%';
@@ -145,79 +220,67 @@ btnReset.addEventListener('click', function() {
 	}
 });
 
-//кнопка провести честное голование
-btnVoting.addEventListener('click', function() {
-	let progressBar = mainBlock.querySelectorAll('.progress-bar'),
-	progressBarNumber = mainBlock.querySelectorAll('.result-count');
-	mCardsItem = document.querySelectorAll('.main-cards-item ');
-	function getRandomInt(min, max){
-		let result = Math.floor(Math.random() * (max - min) + min);
-		result2 = Math.floor(Math.random()* (max - result) + min);
-		result3 = max - result - result2;
-		if (result > result2 && result > result3) {
-			mCardsItem[0].classList.add("main-cards-item-active");
-			mCardsItem[1].classList.remove("main-cards-item-active");
-			mCardsItem[2].classList.remove("main-cards-item-active");
-		} else if (result2 > result && result2 > result3) {
-			mCardsItem[0].classList.remove("main-cards-item-active");
-			mCardsItem[1].classList.add("main-cards-item-active");
-			mCardsItem[2].classList.remove("main-cards-item-active");
-		} else {
-			mCardsItem[0].classList.remove("main-cards-item-active");
-			mCardsItem[1].classList.remove("main-cards-item-active");
-			mCardsItem[2].classList.add("main-cards-item-active");
-		};
-		progressBar[0].style.height = result + "%";
-		progressBar[1].style.height = result2 + "%";
-		progressBar[2].style.height = result3 + "%";
-		progressBarNumber[0].textContent = progressBar[0].style.height;
-		progressBarNumber[1].textContent = progressBar[1].style.height;
-		progressBarNumber[2].textContent = progressBar[2].style.height;
-	};
-	getRandomInt(0, 100);
+// Провести честное голосование
+
+let votes = [];
+btnVoting.addEventListener("click", function() {
+  votes = [];
+  votes[0] = getRandomInt(0, 100);
+
+  if(votes[0] < 100) {
+    votes[1] = getRandomInt(0, 100 - votes[0]);
+    if(votes[0] + votes[1] < 100){
+      votes[2] = 100 - votes[0] - votes[1];
+    } else {
+      votes[2] = 0;
+    }
+  } else {
+    votes[1] = 0;
+    votes[2] = 0;
+  }
+
+  let progressBar = mainBlock.querySelectorAll(".progress-bar"),
+  progressBarNumber = mainBlock.querySelectorAll(".result-count");
+  for (var i = 0; i < progressBar.length; i++) {
+    progressBar[i].style.height = votes[i] + "%";
+    progressBarNumber[i].textContent = votes[i] + "%";
+  }
 });
 
-//кнопка вмешаться в выборы
-btnСrime.addEventListener('click', function() {
-	let progressBar = mainBlock.querySelectorAll('.progress-bar'),
-			progressBarNumber = mainBlock.querySelectorAll('.result-count'),
-			result = parseInt(progressBar[0].style.height),
-			result2 = parseInt(progressBar[1].style.height),
-			result3 = parseInt(progressBar[2].style.height);
+// Получение рандомного числа
 
-			if (result > 16 && result <= 100 && result2 > 16 && result2 <= 100) {
-				result = parseInt(progressBar[0].style.height) - 25/2;
-				result2 = parseInt(progressBar[1].style.height) - 25/2;
-				result3 = parseInt(progressBar[2].style.height) + 25;
-			} else if (result <= 26 || result2 >= 26) {
-				result2 = parseInt(progressBar[1].style.height) - 25;
-				result3 = parseInt(progressBar[2].style.height) + 25;
-			}	else if (result >= 26 || result2 <= 26) {
-				result = parseInt(progressBar[0].style.height) - 25;
-				result3 = parseInt(progressBar[2].style.height) + 25;
-			}	else if (result < 10 || result2 < 10) {
-				result = parseInt(progressBar[0].style.height),
-				result2 = parseInt(progressBar[1].style.height),
-				result3 = parseInt(progressBar[2].style.height);
-			}
-		if (result > result2 && result > result3) {
-			mCardsItem[0].classList.add("main-cards-item-active");
-			mCardsItem[1].classList.remove("main-cards-item-active");
-			mCardsItem[2].classList.remove("main-cards-item-active");
-		} else if (result2 > result && result2 > result3) {
-			mCardsItem[0].classList.remove("main-cards-item-active");
-			mCardsItem[1].classList.add("main-cards-item-active");
-			mCardsItem[2].classList.remove("main-cards-item-active");
-		} else {
-			mCardsItem[0].classList.remove("main-cards-item-active");
-			mCardsItem[1].classList.remove("main-cards-item-active");
-			mCardsItem[2].classList.add("main-cards-item-active");
-		};
-		progressBar[0].style.height = result + "%";
-		progressBar[1].style.height = result2 + "%";
-		progressBar[2].style.height = result3 + "%";
-		progressBarNumber[0].textContent = progressBar[0].style.height;
-		progressBarNumber[1].textContent = progressBar[1].style.height;
-		progressBarNumber[2].textContent = progressBar[2].style.height;
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+// Вмешаться в выборы
+
+btnСrime.addEventListener("click", function() {
+  let progressBar = mainBlock.querySelectorAll(".progress-bar"),
+  progressBarNumber = mainBlock.querySelectorAll(".result-count"),
+  popularIndex = mostPopular(votes);
+
+  if(votes[popularIndex] >= 25 && votes[2] <= 75){
+    votes[popularIndex] -= 25;
+    votes[2] += 25;
+  }
+
+  for (var i = 0; i < progressBar.length; i++) {
+    progressBar[i].style.height = votes[i] + "%";
+    progressBarNumber[i].textContent = votes[i] + "%";
+  }
 });
+
+let mostPopularIndex = 0;
+function mostPopular(arr){
+  let mostPopularValue = 0;
+  for (var i = 0; i < votes.length - 1; i++) {
+    if (votes[i] > mostPopularValue) { 
+      mostPopularValue = votes[i];
+      mostPopularIndex = i;
+    }
+  }
+  return mostPopularIndex;
+}
+
 });
