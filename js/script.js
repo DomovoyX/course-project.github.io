@@ -167,41 +167,40 @@ btnReady.addEventListener("click", function() {
 	newPerson.bio = document.querySelector("#bio").value;
 
 	valid = true;
+	let lengthSymbol = 0;
 
+	lengthSymbol = document.getElementById('name').value.length;
 //проверка на валидность
-if(newPerson.name !== "" && isNaN(+newPerson.name)){
-	document.querySelector("#name").style.border = "none";
-	document.querySelector("#name").style.background = "#1c2028";
-	document.querySelector("#name").style.color = "#fff";
-} else {
-	alert("Поле для воода имени пустое либо не корректный ввод!");
+if(newPerson.name == "" && !isNaN(+newPerson.name) || lengthSymbol < 6){
+	alert("Поле для воода имени пустое, кол-во символов меньше 6 либо не корректный ввод!");
 	document.querySelector("#name").style.border = "1px solid red";
 	document.querySelector("#name").style.background = "#ffc6c6";
 	document.querySelector("#name").style.color = "#1c2028";
 	valid = false;
-}
+	} else {
+	document.querySelector("#name").style.border = "none";
+	document.querySelector("#name").style.background = "#1c2028";
+	document.querySelector("#name").style.color = "#fff";}
 if(newPerson.age !== "" && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
 	document.querySelector("#age").style.border = "none";
 	document.querySelector("#name").style.background = "#1c2028";
 	document.querySelector("#name").style.color = "#fff";
-} else {
+	} else {
 	alert("Введите возраст кандидата, он должен быть от 30 до 65 лет!");
 	document.querySelector("#age").style.border = "1px solid red";
 	document.querySelector("#age").style.background = "#ffc6c6";
 	document.querySelector("#age").style.color = "#1c2028";
-	valid = false;
-}
+	valid = false;}
 if(newPerson.bio !== "" && isNaN(+newPerson.bio)){
 	document.querySelector("#bio").style.border = "none";
 	document.querySelector("#name").style.background = "#1c2028";
 	document.querySelector("#name").style.color = "#fff";
-} else {
+	} else {
 	alert("Заполните биогранфию кандидата!");
 	document.querySelector("#bio").style.border = "1px solid red";
 	document.querySelector("#bio").style.background = "#ffc6c6";
 	document.querySelector("#bio").style.color = "#1c2028";
-	valid = false;
-}
+	valid = false;}
 if(!valid) {
 	return;
 }
@@ -285,18 +284,18 @@ btnReset.addEventListener("click", function() {
 let result = [];
 
 btnVoting.addEventListener("click", function() {
-	result[0] = getRandomInt(0, 100);
+	result[0] = getRandomInt(1, 100);
 
-	if(result[0] < 100) {
-		result[1] = getRandomInt(0, 100 - result[0]);
-		if(result[0] + result[1] < 100){
+	if(result[0] <= 98) {
+		result[1] = getRandomInt(1, 100 - result[0]);
+		if(result[0] + result[1] <= 99){
 			result[2] = 100 - result[0] - result[1];
 		} else {
-			result[2] = 0;
+			result[2] = 1;
 		}
 	} else {
-		result[1] = 0;
-		result[2] = 0;
+		result[1] = 1;
+		result[2] = 1;
 	}
 
 	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
@@ -310,7 +309,7 @@ btnVoting.addEventListener("click", function() {
 // Получение рандомного числа
 
 function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1) ) + min;
+	return Math.floor(Math.random() * (max - min) ) + min;
 }
 
 // Вмешаться в выборы
