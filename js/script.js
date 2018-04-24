@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	char = document.getElementsByClassName('custom-char')[0],
 	style = document.getElementsByClassName('custom-style')[0];
 
-	//создаю кандидата
+	// переходим к созданию карточки кандидата
 	btnCreate.addEventListener('click', function() {
 		windowOverlay.style.display = 'none';
 		mainBlock.style.display = 'none';
@@ -113,9 +113,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 			});
 
-		
-
-//новая карточка кандидата
+//новая карточка кандидата, заполнение данных о кандидате, несколько простых проверок на ввод данных
 btnReady.addEventListener('click', function() {
 	let mCards = document.getElementsByClassName('main-cards'),
 	newPerson = {};
@@ -132,31 +130,35 @@ btnReady.addEventListener('click', function() {
 			document.querySelector("#name").style.background = "#1c2028";
 			document.querySelector("#name").style.color = "#fff";
 		} else {
+			alert("Поле для воода имени пустое либо не корректный ввод!");
 			document.querySelector("#name").style.border = "1px solid red";
 			document.querySelector("#name").style.background = "#ffc6c6";
 			document.querySelector("#name").style.color = "#1c2028";
 			valid = false;
-		}
-		if(document.getElementById('male').checked || document.getElementById('female').checked) {
-  		newPerson.sex = document.querySelector('[name=sex]:checked').value;
-		} else {
-  		alert("Выберете пол кандидата!");
 		}
 		if(newPerson.age !== '' && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
 			document.querySelector("#age").style.border = "none";
 			document.querySelector("#name").style.background = "#1c2028";
 			document.querySelector("#name").style.color = "#fff";
 		} else {
+			alert("Введите возраст кандидата, он должен быть от 30 до 65 лет!");
 			document.querySelector("#age").style.border = "1px solid red";
 			document.querySelector("#age").style.background = "#ffc6c6";
 			document.querySelector("#age").style.color = "#1c2028";
 			valid = false;
 		}
+		if(document.getElementById('male').checked || document.getElementById('female').checked) {
+			newPerson.sex = document.querySelector('[name=sex]:checked').value;
+		} else {
+			alert("Выберете пол кандидата!");
+		}
+		
 		if(newPerson.bio !== '' && isNaN(+newPerson.bio)){
 			document.querySelector("#bio").style.border = "none";
 			document.querySelector("#name").style.background = "#1c2028";
 			document.querySelector("#name").style.color = "#fff";
 		} else {
+			alert("Заполните биогранфию кандидата!");
 			document.querySelector("#bio").style.border = "1px solid red";
 			document.querySelector("#bio").style.background = "#ffc6c6";
 			document.querySelector("#bio").style.color = "#1c2028";
@@ -177,7 +179,10 @@ btnReady.addEventListener('click', function() {
 		newCardsItem.querySelector('.bio').textContent = newPerson.bio;
 		newCardsItem.querySelector('.photo').classList.remove('photo-1');
 		newCardsItem.querySelector(".photo").style.backgroundImage = personEasy.style.backgroundImage;
-		
+		newCardsItem.querySelector(".photo").style.backgroundSize = "contain";
+		newCardsItem.querySelector(".photo").style.backgroundRepeat = "no-repeat";
+
+//переносим нашу карточку в конец списка
 		mCards[0].appendChild(newCardsItem);
 
 //обнуляю голоса
@@ -222,65 +227,65 @@ btnReset.addEventListener('click', function() {
 
 // Провести честное голосование
 
-let votes = [];
+let result = [];
+
 btnVoting.addEventListener("click", function() {
-  votes = [];
-  votes[0] = getRandomInt(0, 100);
+	result[0] = getRandomInt(0, 100);
 
-  if(votes[0] < 100) {
-    votes[1] = getRandomInt(0, 100 - votes[0]);
-    if(votes[0] + votes[1] < 100){
-      votes[2] = 100 - votes[0] - votes[1];
-    } else {
-      votes[2] = 0;
-    }
-  } else {
-    votes[1] = 0;
-    votes[2] = 0;
-  }
+	if(result[0] < 100) {
+		result[1] = getRandomInt(0, 100 - result[0]);
+		if(result[0] + result[1] < 100){
+			result[2] = 100 - result[0] - result[1];
+		} else {
+			result[2] = 0;
+		}
+	} else {
+		result[1] = 0;
+		result[2] = 0;
+	}
 
-  let progressBar = mainBlock.querySelectorAll(".progress-bar"),
-  progressBarNumber = mainBlock.querySelectorAll(".result-count");
-  for (var i = 0; i < progressBar.length; i++) {
-    progressBar[i].style.height = votes[i] + "%";
-    progressBarNumber[i].textContent = votes[i] + "%";
-  }
+	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
+			progressBarNumber = mainBlock.querySelectorAll(".result-count");
+	for (var i = 0; i < progressBar.length; i++) {
+		progressBar[i].style.height = result[i] + "%";
+		progressBarNumber[i].textContent = result[i] + "%";
+	}
 });
 
 // Получение рандомного числа
 
 function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
+		return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
 // Вмешаться в выборы
 
 btnСrime.addEventListener("click", function() {
-  let progressBar = mainBlock.querySelectorAll(".progress-bar"),
-  progressBarNumber = mainBlock.querySelectorAll(".result-count"),
-  popularIndex = mostPopular(votes);
+	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
+			progressBarNumber = mainBlock.querySelectorAll(".result-count"),
+			votesCandidate = counter(result);
 
-  if(votes[popularIndex] >= 25 && votes[2] <= 75){
-    votes[popularIndex] -= 25;
-    votes[2] += 25;
-  }
+	if(result[votesCandidate] >= 25 && result[2] <= 75){
+		result[votesCandidate] -= 25;
+		result[2] += 25;
+	}
 
-  for (var i = 0; i < progressBar.length; i++) {
-    progressBar[i].style.height = votes[i] + "%";
-    progressBarNumber[i].textContent = votes[i] + "%";
-  }
+	for (var i = 0; i < progressBar.length; i++) {
+		progressBar[i].style.height = result[i] + "%";
+		progressBarNumber[i].textContent = result[i] + "%";
+	}
 });
 
-let mostPopularIndex = 0;
-function mostPopular(arr){
-  let mostPopularValue = 0;
-  for (var i = 0; i < votes.length - 1; i++) {
-    if (votes[i] > mostPopularValue) { 
-      mostPopularValue = votes[i];
-      mostPopularIndex = i;
-    }
-  }
-  return mostPopularIndex;
+let counterIndex = 0;
+function counter(arr){
+	let counterValue = 0;
+	for (var i = 0; i < result.length - 1; i++) {
+		if (result[i] > counterValue) { 
+			counterValue = result[i];
+			counterIndex = i;
+		}
+	}
+	return counterIndex;
 }
 
 });
