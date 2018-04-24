@@ -177,36 +177,36 @@ if(newPerson.name == "" && !isNaN(+newPerson.name) || lengthSymbol < 6){
 	document.querySelector("#name").style.background = "#ffc6c6";
 	document.querySelector("#name").style.color = "#1c2028";
 	valid = false;
-	} else {
+} else {
 	document.querySelector("#name").style.border = "none";
 	document.querySelector("#name").style.background = "#1c2028";
 	document.querySelector("#name").style.color = "#fff";}
-if(newPerson.age !== "" && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
-	document.querySelector("#age").style.border = "none";
-	document.querySelector("#name").style.background = "#1c2028";
-	document.querySelector("#name").style.color = "#fff";
+	if(newPerson.age !== "" && !isNaN(+newPerson.age) && newPerson.age >= 30 && newPerson.age <= 65){
+		document.querySelector("#age").style.border = "none";
+		document.querySelector("#name").style.background = "#1c2028";
+		document.querySelector("#name").style.color = "#fff";
 	} else {
-	alert("Введите возраст кандидата, он должен быть от 30 до 65 лет!");
-	document.querySelector("#age").style.border = "1px solid red";
-	document.querySelector("#age").style.background = "#ffc6c6";
-	document.querySelector("#age").style.color = "#1c2028";
-	valid = false;}
-if(newPerson.bio !== "" && isNaN(+newPerson.bio)){
-	document.querySelector("#bio").style.border = "none";
-	document.querySelector("#name").style.background = "#1c2028";
-	document.querySelector("#name").style.color = "#fff";
-	} else {
-	alert("Заполните биогранфию кандидата!");
-	document.querySelector("#bio").style.border = "1px solid red";
-	document.querySelector("#bio").style.background = "#ffc6c6";
-	document.querySelector("#bio").style.color = "#1c2028";
-	valid = false;}
-if(!valid) {
-	return;
-}
+		alert("Введите возраст кандидата, он должен быть от 30 до 65 лет!");
+		document.querySelector("#age").style.border = "1px solid red";
+		document.querySelector("#age").style.background = "#ffc6c6";
+		document.querySelector("#age").style.color = "#1c2028";
+		valid = false;}
+		if(newPerson.bio !== "" && isNaN(+newPerson.bio)){
+			document.querySelector("#bio").style.border = "none";
+			document.querySelector("#name").style.background = "#1c2028";
+			document.querySelector("#name").style.color = "#fff";
+		} else {
+			alert("Заполните биогранфию кандидата!");
+			document.querySelector("#bio").style.border = "1px solid red";
+			document.querySelector("#bio").style.background = "#ffc6c6";
+			document.querySelector("#bio").style.color = "#1c2028";
+			valid = false;}
+			if(!valid) {
+				return;
+			}
 
-mCardsItem.classList.remove("main-cards-item-active");
-newCardsItem = mCardsItem.cloneNode(true);
+			mCardsItem.classList.remove("main-cards-item-active");
+			newCardsItem = mCardsItem.cloneNode(true);
 
 //заполняю карточку
 newCardsItem.querySelector(".name").textContent = newPerson.name;
@@ -284,6 +284,8 @@ btnReset.addEventListener("click", function() {
 let result = [];
 
 btnVoting.addEventListener("click", function() {
+	let mCardsItem = document.querySelectorAll('.main-cards-item');
+	
 	result[0] = getRandomInt(1, 100);
 
 	if(result[0] <= 98) {
@@ -298,8 +300,19 @@ btnVoting.addEventListener("click", function() {
 		result[2] = 1;
 	}
 
+	for (var i = 0; i < mCardsItem.length; i++) {
+		mCardsItem[i].classList.remove("main-cards-item-active");
+		if (result[0] > result[1] && result[0] > result[2]) {
+			mCardsItem[0].classList.add("main-cards-item-active");
+		} else if (result[1] > result[0] && result[1] > result[2]) {
+			mCardsItem[1].classList.add("main-cards-item-active");
+		} else {
+			mCardsItem[2].classList.add("main-cards-item-active");
+		}
+	}
+
 	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
-	progressBarNumber = mainBlock.querySelectorAll(".result-count");
+			progressBarNumber = mainBlock.querySelectorAll(".result-count");
 	for (var i = 0; i < progressBar.length; i++) {
 		progressBar[i].style.height = result[i] + "%";
 		progressBarNumber[i].textContent = result[i] + "%";
@@ -316,8 +329,9 @@ function getRandomInt(min, max) {
 
 btnСrime.addEventListener("click", function() {
 	let progressBar = mainBlock.querySelectorAll(".progress-bar"),
-	progressBarNumber = mainBlock.querySelectorAll(".result-count"),
-	votesCandidate = counter(result);
+			progressBarNumber = mainBlock.querySelectorAll(".result-count"),
+			mCardsItem = document.querySelectorAll('.main-cards-item'),
+			votesCandidate = counter(result);
 
 	if(result[votesCandidate] >= 25 && result[2] <= 75){
 		result[votesCandidate] -= 25;
@@ -327,6 +341,17 @@ btnСrime.addEventListener("click", function() {
 	for (var i = 0; i < progressBar.length; i++) {
 		progressBar[i].style.height = result[i] + "%";
 		progressBarNumber[i].textContent = result[i] + "%";
+	}
+
+	for (var i = 0; i < mCardsItem.length; i++) {
+		mCardsItem[i].classList.remove("main-cards-item-active");
+		if (result[0] > result[1] && result[0] > result[2]) {
+			mCardsItem[0].classList.add("main-cards-item-active");
+		} else if (result[1] > result[0] && result[1] > result[2]) {
+			mCardsItem[1].classList.add("main-cards-item-active");
+		} else {
+			mCardsItem[2].classList.add("main-cards-item-active");
+		}
 	}
 });
 
